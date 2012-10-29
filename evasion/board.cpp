@@ -13,6 +13,7 @@ void Gameboard::updatePreyMove(string move) {
 	int newX = Ploc.x + dx;
 	int newY = Ploc.y + dy;
 
+
 	// bounce if necessary
 	// hit a vertical wall
 	if (isWall[newX][newY] == 'V'|| newX == 0 || newX == 499) {
@@ -222,6 +223,10 @@ Gameboard::Gameboard(int paramMaxWalls) {
 
 	maxWalls = paramMaxWalls;
 	
+	for (int i = 0; i < 500; i++) 
+		for (int j = 0; j < 500; j++) 
+			isWall[i][j] = 'N';
+
 /*
 	buildWall(0,0,500,0);
 	buildWall(500,0,500,500);
