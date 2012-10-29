@@ -15,22 +15,22 @@ void Gameboard::updatePreyMove(string move) {
 
 	// bounce if necessary
 	// hit a vertical wall
-	if (isWall[newX][newY] == 'V'|| newX == 0 || newX == 500) {
+	if (isWall[newX][newY] == 'V'|| newX == 0 || newX == 499) {
 		newX = Ploc.x;
-		if (isWall[newX][newY] != 'N' || newX == 0 || newX == 500 || newY == 0 || newY == 500) {
+		if (isWall[newX][newY] != 'N' || newX == 0 || newX == 499 || newY == 0 || newY == 499) {
 			newX += dx;
 			newY = Ploc.y;
-			if (isWall[newX][newY] != 'N'|| newX == 0 || newX == 500 || newY == 0 || newY == 500)
+			if (isWall[newX][newY] != 'N'|| newX == 0 || newX == 499 || newY == 0 || newY == 499)
 				newX = Ploc.x;
 		}
 	} 
 	// hit a horizontal wall
-	else if (isWall[newX][newY] == 'H'|| newY == 0 || newY == 500) {
+	else if (isWall[newX][newY] == 'H'|| newY == 0 || newY == 499) {
 		newY = Ploc.y;
-		if (isWall[newX][newY] != 'N'|| newX == 0 || newX == 500 || newY == 0 || newY == 500) {
+		if (isWall[newX][newY] != 'N'|| newX == 0 || newX == 499 || newY == 0 || newY == 499) {
 			newY += dy;
 			newX = Ploc.x;
-			if (isWall[newX][newY] != 'N'|| newX == 0 || newX == 500 || newY == 0 || newY == 500)
+			if (isWall[newX][newY] != 'N'|| newX == 0 || newX == 499 || newY == 0 || newY == 499)
 				newY = Ploc.y;
 		}
 	}
@@ -120,23 +120,23 @@ void Gameboard::updateHunterMove(string move) {
 
 	// bounce if necessary
 	// hit a vertical wall
-	if (isWall[newX][newY] == 'V' || newX == 0 || newX == 500) {
+	if (isWall[newX][newY] == 'V' || newX == 0 || newX == 499) {
 		newX = Hloc.x;
-		if (isWall[newX][newY] != 'N' || newX == 0 || newX == 500 || newY == 0 || newY == 500) {
+		if (isWall[newX][newY] != 'N' || newX == 0 || newX == 499 || newY == 0 || newY == 499) {
 			newX += HVelocity.x;
 			newY = Hloc.y;
-			if (isWall[newX][newY] != 'N' || newX == 0 || newX == 500 || newY == 0 || newY == 500)
+			if (isWall[newX][newY] != 'N' || newX == 0 || newX == 499 || newY == 0 || newY == 499)
 				newX = Hloc.x;
 		}
 	} 
 
 	// hit a horizontal wall
-	else if (isWall[newX][newY] == 'H' || newY == 0 || newY == 500) {
+	else if (isWall[newX][newY] == 'H' || newY == 0 || newY == 499) {
 		newY = Hloc.y;
-		if (isWall[newX][newY] != 'N' || newX == 0 || newX == 500 || newY == 0 || newY == 500) {
+		if (isWall[newX][newY] != 'N' || newX == 0 || newX == 499 || newY == 0 || newY == 499) {
 			newY += HVelocity.y;
 			newX = Hloc.x;
-			if (isWall[newX][newY] != 'N' || newX == 0 || newX == 500 || newY == 0 || newY == 500)
+			if (isWall[newX][newY] != 'N' || newX == 0 || newX == 499 || newY == 0 || newY == 499)
 				newY = Hloc.y;
 		}
 	}
