@@ -13,7 +13,6 @@ void Gameboard::updatePreyMove(string move) {
 	int newX = Ploc.x + dx;
 	int newY = Ploc.y + dy;
 
-
 	// bounce if necessary
 	// hit a vertical wall
 	if (isWall[newX][newY] == 'V'|| newX == 0 || newX == 499) {
@@ -211,6 +210,17 @@ int Gameboard::buildWall(int x0, int y0, int x1, int y1) {
 	newWall.y1 = y1;
 	walls.push_back(newWall);
 
+	// update isWall for bouncing procedures
+	// vertical wall
+	if (x0 == x1)
+	for (int i = y0; i <= y1; i++) 
+		isWall[x0][i] = 'V';
+
+	// horizontal wall
+	if (y0 == y1)
+	for (int i = x0; i <= x1; i++) 
+		isWall[i][y0] = 'H';
+
 	return 0;
 }
 
@@ -332,13 +342,17 @@ string Hunter::nextMove(string status){
 	wallH.y0 = Hloc.y;
 	wallH.y1 = Hloc.y;
 
+//	bounds.print();
+
 	// check #1: can you build a wall this round?
 	if (nMovesTaken >= wallRate) {
 		// check #2: will it put a wall between Hunter and Prey?
 		if ( (velocity.x == 1 && Hloc.x >= Ploc.x) || (velocity.x == -1 && Hloc.x <= Ploc.x)) tryV = false;
-		if ( (velocity.y == 1 && Hloc.y >= Ploc.y) || (velocity.x == -1 && Hloc.y <= Ploc.y)) tryV = false;
+		if ( (velocity.y == 1 && Hloc.y >= Ploc.y) || (velocity.y == -1 && Hloc.y <= Ploc.y)) tryH = false;
 
 		BoundedBox Vbounds, Hbounds;
+//		Vbounds = bounds;
+//		Hbounds = bounds;
 		Vbounds.init();
 		Hbounds.init();
 
@@ -379,7 +393,7 @@ string Hunter::nextMove(string status){
 		// find the bounds for your new walls
 		for (int i = 0; i < nWall; i++) {
 			// bound your vertical wall with existing horizontal walls
-			if ((walls[i].y0 == walls[i].y1) && ( walls[i].x0 < wallV.x0 && wallV.x0 < walls[i].x1 ) ) {
+			if ((walls[i].y0 == walls[i].y1) && ( walls[i].x0 <= wallV.x0 && wallV.x0 <= walls[i].x1 ) ) {
 				// bound the top
 				if ( walls[i].y0 < Hloc.y && walls[i].y0 > wallV.y0 ) {
 					wallV.y0 = walls[i].y0;
@@ -392,7 +406,7 @@ string Hunter::nextMove(string status){
 				}
 			}
 			// bound your horizontal wall with existing vertical walls
-			if ((walls[i].x0 == walls[i].x1) && ( walls[i].y0 < wallV.y0 && wallV.y0 < walls[i].y1 ) ) {
+			if ((walls[i].x0 == walls[i].x1) && ( walls[i].y0 <= wallV.y0 && wallV.y0 <= walls[i].y1 ) ) {
 				// bound the left
 				if ( walls[i].x0 < Hloc.x && walls[i].x0 > wallH.x0 ) {
 					wallH.x0 = walls[i].x0;
@@ -421,13 +435,14 @@ string Hunter::nextMove(string status){
 		areaV = Vbounds.area();
 		areaH = Hbounds.area();
 
-//		cout << "*****************" << endl;
-//		if (tryV) cout << "Can build V wall with area " << areaV << endl;
-//		Vbounds.print();
-//		if (tryH) cout << "Can build H wall with area " << areaH << endl;
-//		Hbounds.print();
-//		cout << "*****************" << endl;
-
+/*
+		cout << "*****************" << endl;
+		if (tryV) cout << "Can build V wall with area " << areaV << endl;
+		Vbounds.print();
+		if (tryH) cout << "Can build H wall with area " << areaH << endl;
+		Hbounds.print();
+		cout << "*****************" << endl;
+*/
 
 		if (tryV && tryH) {
 			if (areaV < areaH) {
@@ -457,6 +472,8 @@ string Hunter::nextMove(string status){
 			if (!bounds.contains(walls[i])) {
 				out << walls[i].x0 << " " << walls[i].y0 << " " << walls[i].x1 << " " << walls[i].y1;
 				removedWall = true;
+//				cout << "removing wall "; 
+//				cout << walls[i].x0 << " " << walls[i].y0 << " " << walls[i].x1 << " " << walls[i].y1 << endl;
 				break;
 			}
 		}
