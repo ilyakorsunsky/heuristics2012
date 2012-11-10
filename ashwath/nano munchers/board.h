@@ -1,0 +1,52 @@
+#include <vector>
+#include <cmath>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <fstream>
+#include <queue>
+#include <algorithm>
+using namespace std;
+
+
+class node{
+	bool eaten;
+	vector<int> links;
+	int xloc;
+	int yloc;
+	int node_id;
+	
+	public:
+		node(int x, int y, int id);
+		void add_links(int id2);
+};
+
+
+class tree
+{		
+	public:
+	int num_node;	
+	vector< vector<int> > adjacency_mat;	
+	void setnum_node(int n);
+	void print_tree();
+	static bool comp_func(tree i,tree j) { 
+		return (i.num_node > j.num_node); 
+	}
+	
+};
+
+
+class forest
+{
+	public:
+		bool sorted;
+		vector<tree> input;
+		void print_forest();		
+		forest(vector<vector<int> > links, vector<vector<int> > node_data);
+		void sort_forest();
+
+		
+};
