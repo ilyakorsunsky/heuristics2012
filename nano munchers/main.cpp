@@ -4,7 +4,7 @@
 int main() {
 	int count = 0;
 	string line;
-  vector<vector<int> > links;
+  vector<vector<node> > links;
 	vector<vector<int> > node_data;
 
   ifstream infile ("graph.txt");
@@ -48,8 +48,9 @@ int main() {
 					 
             count = node_data.size();
             for(int i=0; i<count; ++i){
-               vector<int> v;
-               v.push_back(i);
+               vector<node> v;
+               node n(node_data.at(i)[0],node_data.at(i)[1],node_data.at(i)[2]);
+               v.push_back(n);
                links.push_back(v);
             }
   
@@ -71,8 +72,11 @@ int main() {
         			}	
 
 						 // cout << id1 << ": " << id2 << endl; 
-              links.at(id1).push_back(id2);
-              links.at(id2).push_back(id1);     				
+              node n1(node_data.at(id1)[0], node_data.at(id1)[1], node_data.at(id1)[2]);
+              node n2(node_data.at(id2)[0], node_data.at(id2)[1], node_data.at(id2)[2]);
+              
+              links.at(n1.node_id).push_back(n2);
+              links.at(n2.node_id).push_back(n1);     				
       		  }
       	}
 
@@ -99,18 +103,18 @@ int main() {
     // Prints the links
     /*
     cout << "global adacency matrix:"<< endl;
-    for (int i = 0; i < links.size(); ++i)
-    { cout<< i <<": ";
+    for (int i = 0; i < links.size(); ++i){ 
+      cout<< i <<": ";
       for (int j = 0; j < links.at(i).size(); ++j)
       {
-        cout << links.at(i).at(j)<< ", ";
+        cout << links.at(i).at(j).node_id<< " x: "<<links.at(i).at(j).xloc << ":done:" ;
       }
       cout << endl;
     }
     */
-
     
-    forest f1(links, node_data);
+    
+    forest f1(links);
     f1.sort_forest();
     f1.print_forest();
 

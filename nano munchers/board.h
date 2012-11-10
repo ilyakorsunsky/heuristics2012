@@ -13,15 +13,15 @@ using namespace std;
 
 
 class node{
+	
+	public:
 	bool eaten;
-	vector<int> links;
+	//vector<int> links;
 	int xloc;
 	int yloc;
 	int node_id;
-	
-	public:
-		node(int x, int y, int id);
-		void add_links(int id2);
+		node(int id, int x, int y);
+		//void add_links(int id2);
 };
 
 
@@ -29,7 +29,7 @@ class tree
 {		
 	public:
 	int num_node;	
-	vector< vector<int> > adjacency_mat;	
+	vector< vector<node> > adjacency_mat;	
 	void setnum_node(int n);
 	void print_tree();
 	static bool comp_func(tree i,tree j) { 
@@ -45,7 +45,7 @@ class forest
 		bool sorted;
 		vector<tree> input;
 		void print_forest();		
-		forest(vector<vector<int> > links, vector<vector<int> > node_data);
+		forest(vector<vector<node> > links);
 		void sort_forest();
 
 		

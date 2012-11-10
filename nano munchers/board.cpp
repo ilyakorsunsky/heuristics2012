@@ -1,15 +1,17 @@
 #include "board.h"
 
-node :: node(int x, int y, int id){
+node :: node(int id, int x, int y){
 	xloc = x; 
 	yloc = y;
 	node_id = id;
 	eaten = false;
 }
-		
+
+/*		
 void node:: add_links(int id2){
 			links.push_back(id2);
 		}
+*/
 
 void tree :: setnum_node(int n){
 			num_node = n;
@@ -20,7 +22,7 @@ void tree :: print_tree(){
 		{
 			for (int j = 0; j < adjacency_mat.at(i).size(); ++j)
 			{
-				cout << adjacency_mat[i][j]<<" ";
+				cout << adjacency_mat[i][j].node_id<<" ";
 			}
 			cout << endl;
 		}
@@ -37,12 +39,12 @@ void forest :: print_forest(){
 		}
 	} 
 
-forest :: forest(vector<vector<int> > links, vector<vector<int> > node_data){
+forest :: forest(vector<vector<node> > links){
 		vector<int> visited;				
 
 		for(int x = 0; x< links.size(); x++) {				
 				tree temp;
-				queue<int> bag;
+				queue<node> bag;
 
 				int visit_flag = 0;
 					for (int j = 0; j < visited.size(); ++j) {  // skippping already visited nodes
@@ -57,28 +59,24 @@ forest :: forest(vector<vector<int> > links, vector<vector<int> > node_data){
 				
 				bag.push(links.at(x).at(0));
 				
-				//node n( node_data.at(links.at(x).at(0))[0], node_data.at(links.at(x))[1], node_data.at(links.at(x))[2]);
-				//bag.push(n);
-
 				int num = 1;
-				visited.push_back(links.at(x).at(0));
+				visited.push_back(links.at(x).at(0).node_id);
 				while(!bag.empty()) {
 					
-					int y = bag.front();
-					temp.adjacency_mat.push_back(links.at(y));
-					for (int i = 0; i < links.at(y).size(); ++i) {
+					node y = bag.front();
+					temp.adjacency_mat.push_back(links.at(y.node_id));
+					
+					for (int i = 0; i < links.at(y.node_id).size(); ++i) {
 						int flag = 0;
 						for (int j = 0; j < visited.size(); ++j) {    // Not pushing already visited niebhours into the bag
-							if ( links[y][i] == visited[j]) {
+							if ( links.at(y.node_id).at(i).node_id == visited[j]) {
 								flag = 1;
 							}
 						}
 						if (flag == 0)	{
-							bag.push(links.at(y).at(i));
-							//node n1( node_data.at(links.at(y).at(i))[0], node_data.at(links.at(y).at(i))[1], node_data.at(links.at(y).at(i))[2]);
-							//bag.push(n1);
+							bag.push(links.at(y.node_id).at(i));
 							num++;
-							visited.push_back(links.at(y).at(i));
+							visited.push_back(links.at(y.node_id).at(i).node_id);
 						}
 						
 					}
