@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<! This is a template for laying out the .html file needed to run your program. There are other ways to lay this out, but this a proven framework.>
+<! See example.php for annotations on what everything is and examples of how to do the various bits functions. >
+
+<! Standard page code, sets proper look and feel, standard elements>
+<title>Dr Ecco</title>
+
+<! Open the css sheet for the style>
+<link href="../../style.css" rel="stylesheet" type="text/css" media="screen" />
+
+</head>
+<body>
+
+<! Div to get the background and the css style>
+<div id="body1">
+
+<! Set the title to show at the top of the page>
+<div class="post">
+	<h2 class="title"><a href="#">YourGameNameHere</a></h2>
+</div>
+
+
+<! Center justify and add a few spaces> 
+<center> 
+<br /><br />
+
+<! Insert code to run game here>
+
+
+<! Insert code to retrieve game scores here>
+
+<! Standard button to save score>
+<form name ="YourGameNameHereWinner">
+<input type="button" value="Save my score" onClick="document.location.href='http://cims.nyu.edu/drecco/index.php?task=<YourGameNameHere>&winner=<WinnerName>&ws=<WinnerScoreGoesHere>'">
+</form>
+
+
+
+<br /><br />
+
+<! Insert gameplay instructions here>
+
+</center>
+<br /><br />
+
+
+
+<! Displays high scores for the given game name>	
+	<?php 
+		include '../../functions.php';		
+		getScores("YourGameNameHere");
+	?>	
+
+<! End of file>
+</div>
+</body>
+</html>

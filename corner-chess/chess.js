@@ -1,18 +1,22 @@
 var chessBoard = InitBoard();
 
-var whiteKingHasMoved = false; // need for castling
-var blackKingHasMoved = false; 
+var whiteKingHasMoved = false;
+var blackKingHasMoved = false;
 
-var whiteKingPosition = [0, 4]; //shortcut to prevent searching entire board for king
-var blackKingPosition = [7, 4];
+var whiteKingPosition = [0, 5]; //shortcut to prevent searching entire board for king
+var blackKingPosition = [3, 5];
 
 var specWhiteKingPosition = null;
 var specBlackKingPosition = null;
 
 var currentMove = 'white';
 
+var nPlyW = 0;
+var nPlyB = 0;
+
 $(document).ready(function(){
    
+
    $('.piece').draggable({
 		revert: 'invalid'
    });
@@ -28,7 +32,7 @@ $(document).ready(function(){
 				return isMoveLegal(droppedPiece, $(this));
 			}
    });
-   
+
 });
    
 
@@ -61,34 +65,38 @@ function InitBoard()
 	bishop['white2'] = {type: 'bishop', color: 'white', value: 3};
 	bishop['black1'] = {type: 'bishop', color: 'black', value: 3};
 	bishop['black2'] = {type: 'bishop', color: 'black', value: 3};
+
 	var newBoard = [];
 	
 	// initiate multi-dimensional array for newBoard
 	for (i=0; i<4; i++)
 	{
 		newBoard[i] = [];
+		for (j=0; j<8;j++){
+			newBoard[i][j] = null;
+		}
 	}
-	
-	newBoard[0][0] = rook['white1'];
-	newBoard[0][3] = rook['white2'];
-	newBoard[3][0] = rook['black1'];
-	newBoard[3][3] = rook['black2'];
+
+	newBoard[0][4] = rook['white1'];
+	newBoard[0][7] = rook['white2'];
+	newBoard[3][4] = rook['black1'];
+	newBoard[3][7] = rook['black2'];
 				
-	newBoard[1][0] = knight['white1'];
-	newBoard[1][2] = knight['white2'];
-	newBoard[2][0] = knight['black1'];
-	newBoard[2][2] = knight['black2'];
+	newBoard[1][4] = knight['white1'];
+	newBoard[1][6] = knight['white2'];
+	newBoard[2][4] = knight['black1'];
+	newBoard[2][6] = knight['black2'];
 				
-	newBoard[1][1] = bishop['white1'];
-	newBoard[1][3] = bishop['white2'];
-	newBoard[2][1] = bishop['black1'];
-	newBoard[2][3] = bishop['black2'];
+	newBoard[1][5] = bishop['white1'];
+	newBoard[1][7] = bishop['white2'];
+	newBoard[2][5] = bishop['black1'];
+	newBoard[2][7] = bishop['black2'];
 				
-	newBoard[0][2] = queen['white'];
-	newBoard[3][2] = queen['black'];
+	newBoard[0][6] = queen['white'];
+	newBoard[3][6] = queen['black'];
 				
-	newBoard[0][1] = king['white'];
-	newBoard[3][1] = king['black'];
+	newBoard[0][5] = king['white'];
+	newBoard[3][5] = king['black'];
 
 	return newBoard;
 }
@@ -173,6 +181,7 @@ function performMove(movedDomPiece, targetSpaceDom)
 		// get piece from location of dropped piece
 		var pieceRow = parseInt(movedDomPiece.parent()[0].classList[3].substr(3, 1));
 		var pieceCol = parseInt(movedDomPiece.parent()[0].classList[4].substr(3, 1));
+
 		var movedPiece = chessBoard[pieceRow][pieceCol];
 		
 		var spaceRow = parseInt(targetSpaceDom[0].classList[3].substr(3, 1));
@@ -216,7 +225,7 @@ function performMove(movedDomPiece, targetSpaceDom)
 			if (testCheckMate())
 				alert("Checkmate, " + currentMove + "wins!");
 			alert("Check on " + checkResult + "!");
-		}
+		} 
 }
 
 function isMoveLegal(movedDomPiece, targetSpaceDom)
@@ -228,11 +237,13 @@ function isMoveLegal(movedDomPiece, targetSpaceDom)
 		// for check testing
 		specWhiteKingPosition = whiteKingPosition;
 		specBlackKingPosition = blackKingPosition;
-		
+
 		// this is copying chessBoard[pieceCol] rather than chessBoard[pieceRow, pieceCol]
 		var movedPiece = chessBoard[pieceRow][pieceCol];
 		if (movedPiece == null)
 			return false;
+
+		// 
 		
 		var spaceRow = parseInt(targetSpaceDom[0].classList[3].substr(3, 1));
 		var spaceCol = parseInt(targetSpaceDom[0].classList[4].substr(3, 1));
@@ -269,33 +280,57 @@ function isMoveLegal(movedDomPiece, targetSpaceDom)
 		return false;
 }
 
+
+
+
+
 function determineLegalMoves(piece, pieceRow, pieceCol)
 {
 	var legalMoves = []; // holds the return moves, a string of row, col pairs
+
+
 	
 	if (piece != null)
 	{
-		switch (piece.type)
-		{
-			case 'bishop':
-				legalMoves = addDiagonalMoves(piece, pieceRow, pieceCol);
-				break;
-			case 'knight':
-				legalMoves = addKnightMoves(piece, pieceRow, pieceCol);
-				break;
-			case 'rook':
-				legalMoves = addStraightLineMoves(piece, pieceRow, pieceCol);
-				break;			
-			case 'queen':
-				legalMoves = addDiagonalMoves(piece, pieceRow, pieceCol).concat(addStraightLineMoves(piece, pieceRow, pieceCol));
-				break;
-			case 'king':
-				legalMoves = addKingMoves(piece, pieceRow, pieceCol);
-				break;
-		}
+		// movement within playing board
+		if (isOnBoard(pieceRow,pieceCol)) {
+			switch (piece.type)
+			{
+				case 'bishop':
+					legalMoves = addDiagonalMoves(piece, pieceRow, pieceCol);
+					break;
+				case 'knight':
+					legalMoves = addKnightMoves(piece, pieceRow, pieceCol);
+					break;
+				case 'rook':
+					legalMoves = addStraightLineMoves(piece, pieceRow, pieceCol);
+					break;			
+				case 'queen':
+					legalMoves = addDiagonalMoves(piece, pieceRow, pieceCol).concat(addStraightLineMoves(piece, pieceRow, pieceCol));
+					break;
+				case 'king':
+					legalMoves = addKingMoves(piece, pieceRow, pieceCol);
+					break;
+			}
+		} 
+		// placement onto playing board
+		else {
+			for (i=0; i < 4; i++) {
+				for (j=0; j < 4; j++) {
+					var nextSpace = [i, j];
+					var spaceOccupied = isOccupied(nextSpace[0], nextSpace[1]);
+					if (spaceOccupied == "empty")
+						legalMoves.push(nextSpace);
+				}
+			}
+		}		
 	}
 	return legalMoves;	
+		
 }
+
+
+
 
 function addStraightLineMoves(piece, pieceRow, pieceCol)
 {
@@ -529,6 +564,8 @@ function addKingMoves(piece, pieceRow, pieceCol)
 	return kingMoves;
 }
 
+
+
 function performCheckTest(testBoard)
 {
 	var whiteKingChecked = false;
@@ -538,7 +575,8 @@ function performCheckTest(testBoard)
 	{
 		for (y = 0; y < 4; y++)
 		{
-			if (typeof(testBoard[x][y]) == "object")
+//			if (typeof(testBoard[x][y]) == "object")
+			if (testBoard[x][y] != null)
 			{
 				var currentPiece = testBoard[x][y];
 				var currentPieceMoves = determineLegalMoves(currentPiece, x, y);
@@ -572,7 +610,9 @@ function testCheckMate()
 		for (y = 0; y < 4; y++)
 		{
 			var currentPiece = chessBoard[x][y];
-			if (typeof(chessBoard[x][y]) == "object")
+//			if (typeof(chessBoard[x][y]) == "object")
+			if (chessBoard[x][y] != null)
+//			if (typeof(currentPiece) == "object")
 			{
 				if (currentPiece.color != currentMove)
 				{
@@ -610,3 +650,6 @@ function cloneObject(obj) {
 
     throw new Error("Unable to copy obj! Its type isn't supported.");
 }
+
+
+

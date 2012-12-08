@@ -25,6 +25,21 @@ div.space
 
 }
 
+div.emptyspace
+{
+	min-height: 40px;
+	height: 84px;
+	width: 84px;
+	float: left;
+	text-align: center;
+	vertical-align: middle;
+	display: inline;
+	font-family: Arial;
+	font-weight: bold;
+
+}
+
+
 div.black
 {
 	background-color: #99B2B7;
