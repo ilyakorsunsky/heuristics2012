@@ -9,6 +9,52 @@ div.row
 	height: auto;
 }
 
+div.blackbox
+{
+	min-height: 40px;
+	height: 80px;
+	width: 332px;
+	border: 2px;
+	border-style: solid;
+	float: left;
+	text-align: center;
+	vertical-align: middle;
+	display: inline;
+	font-family: Arial;
+	font-weight: bold;
+	background-color: #99B2B7;
+}
+
+div.whitebox
+{
+	min-height: 40px;
+	height: 80px;
+	width: 332px;
+	border: 2px;
+	border-style: solid;
+	float: left;
+	text-align: center;
+	vertical-align: middle;
+	display: inline;
+	font-family: Arial;
+	font-weight: bold;
+	background-color: #ffffff;
+}
+
+div.emptybox
+{
+	min-height: 40px;
+	height: 40px;
+	width: 332px;
+	float: left;
+	text-align: center;
+	vertical-align: middle;
+	display: inline;
+	font-family: Arial;
+	font-weight: bold;
+
+}
+
 div.space
 {
 	min-height: 40px;
@@ -29,7 +75,7 @@ div.emptyspace
 {
 	min-height: 40px;
 	height: 84px;
-	width: 84px;
+	width: 20px;
 	float: left;
 	text-align: center;
 	vertical-align: middle;
@@ -43,8 +89,8 @@ div.emptyspace
 div.black
 {
 	background-color: #99B2B7;
-	
 }
+
 
 div.white
 {

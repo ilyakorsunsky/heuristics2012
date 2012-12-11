@@ -2,16 +2,65 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
+    	<title>Dr Ecco</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Corner Chess </title>
 		<script type="text/javascript" src="jquery-1.7.2.min.js"></script>
 		<script type="text/javascript" src="jquery-ui-1.8.20.custom.min.js"></script>
 		<script type="text/javascript" src="chess.js"></script>
+
+
 		<link rel="stylesheet" type="text/css" href="chess.css" />
+		<link href="../../style.css" rel="stylesheet" type="text/css" media="screen" />
     </head>
     <body>
-        <h1>Corner Chess </h1>
+
+        <div class="post">
+		<h1 class="title"><a href="#">Corner Chess</a></h1>
+		</div>
+		<font size="4">				
+		<p> <b>Instructions</b>: Move your pieces from the right board to the left and play chess in the left board. </p>
+		 <p><b>Special rules:</b> 
+		 	<ul>
+				<li>Each player must place king on board first</li>
+				<li>Either place a piece from right board or make a normal move </li>
+				<li>White cannot check before black has checked or ply 10 </li>
+	    	</ul>
+	    </p>
+		</font>
+	    
+	    <br />
+
         <div class="board">
+
+
+			<div class="row">
+				<div class="n1 blackbox">
+					<font size="5" color="black">
+						<p id="whose_turn">Move: White</p>
+					</font>
+					<font size="5">
+					</font>
+				</div>
+				<div class="e1 white emptyspace">
+				</div>
+				<div class="n1 whitebox">
+					<font size="5" color="black">
+						<p id="ply_num">Ply: 0</p>
+					</font>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="n1 emptybox">
+				</div>
+				<div class="n1 emptybox">
+				</div>
+			</div>
+
+
+
+
+
 			<div class="row">
 
 				<!-- The playing board, initially empty -->
@@ -30,12 +79,12 @@
 				<!-- The neutral board, initially full -->
 				<div class="a8 white space row3 col4">
 					<div class="piece bl rook">
-						<img src="images/bRook.png" class="hidden" alt="Captured Black Rook" />
+						<img src="images/bRook.png" class="hidden" alt="Captured Black Queen" />
 					</div>		
 				</div>
 				<div class="b8 black space row3 col5">
 					<div class="piece bl king">
-						<img src="images/bKing.png" class="hidden" alt="Captured Black King" />		
+						<img src="images/bKing.png" class="hidden" alt="Captured Black Queen" />		
 					</div>		
 				</div>
 				<div class="c8 white space row3 col6">
@@ -45,17 +94,13 @@
 				</div>
 				<div class="d8 black space row3 col7">
 					<div class="piece bl rook">
-						<img src="images/bRook.png" class="hidden" alt="Captured Black Rook" />		
+						<img src="images/bRook.png" class="hidden" alt="Captured Black Queen" />		
 					</div>		
 				</div>
 
 
-
-
 			</div>
 				
-
-	
 			<div class="row">
 				<!-- The playing board, initially empty -->
 				<div class="a3 black space row2 col0">
@@ -73,22 +118,22 @@
 				<!-- The neutral board, initially full -->
 				<div class="a7 black space row2 col4">
 					<div class="piece bl knight">
-						<img src="images/bKnight.png" class="hidden" alt="Captured Black Knight" />		
+						<img src="images/bKnight.png" class="hidden" alt="Captured Black Queen" />		
 					</div>		
 				</div>
 				<div class="b7 white space row2 col5">
 					<div class="piece bl bishop">
-						<img src="images/bBishop.png" class="hidden" alt="Captured Black Bishop" />		
+						<img src="images/bBishop.png" class="hidden" alt="Captured Black Queen" />		
 					</div>
 				</div>
 				<div class="c7 black space row2 col6">
 					<div class="piece bl knight">				
-						<img src="images/bKnight.png" class="hidden" alt="Captured Black Knight" />
+						<img src="images/bKnight.png" class="hidden" alt="Captured Black Queen" />
 					</div>
 				</div>
 				<div class="d7 white space row2 col7">
 					<div class="piece bl bishop">				
-						<img src="images/bBishop.png" class="hidden" alt="Captured Black Bishop" />
+						<img src="images/bBishop.png" class="hidden" alt="Captured Black Queen" />
 					</div>
 				</div>
 			</div>
@@ -111,22 +156,22 @@
 				<!-- The neutral board, initially full -->
 				<div class="a6 white space row1 col4">
 					<div class="piece wh knight">
-						<img src="images/wKnight.png" class="hidden" alt="Captured White Knight" />
+						<img src="images/wKnight.png" class="hidden" alt="Captured Black Queen" />
 					</div>
 				</div>
 				<div class="b6 black space row1 col5">
 					<div class="piece wh bishop">				
-						<img src="images/wBishop.png" class="hidden" alt="Captured White Bishop" />
+						<img src="images/wBishop.png" class="hidden" alt="Captured Black Queen" />
 					</div>
 				</div>
 				<div class="c6 white space row1 col6">
 					<div class="piece wh knight">				
-						<img src="images/wKnight.png" class="hidden" alt="Captured White Knight" />
+						<img src="images/wKnight.png" class="hidden" alt="Captured Black Queen" />
 					</div>
 				</div>
 				<div class="d6 black space row1 col7">
 					<div class="piece wh bishop">				
-						<img src="images/wBishop.png" class="hidden" alt="Captured White Bishop" />
+						<img src="images/wBishop.png" class="hidden" alt="Captured Black Queen" />
 					</div>
 				</div>
 			</div>
@@ -148,27 +193,40 @@
 				<!-- The neutral board, initially full -->
 				<div class="a5 black space row0 col4">
 					<div class="piece wh rook">			
-						<img src="images/wRook.png" class="hidden" alt="Captured White Rook" />
+						<img src="images/wRook.png" class="hidden" alt="Captured Black Queen" />
 					</div>
 				</div>
 				<div class="b5 white space row0 col5">
 					<div class="piece wh king">				
-						<img src="images/wKing.png" class="hidden" alt="Captured White King" />
+						<img src="images/wKing.png" class="hidden" alt="Captured Black Queen" />
 					</div>
 				</div>
 				<div class="c5 black space row0 col6">
 					<div class="piece wh queen">				
-						<img src="images/wQueen.png" class="hidden" alt="Captured White Queen" />
+						<img src="images/wQueen.png" class="hidden" alt="Captured Black Queen" />
 					</div>
 				</div>
 				<div class="d5 white space row0 col7">
 					<div class="piece wh rook">				
-						<img src="images/wRook.png" class="hidden" alt="Captured White Rook" />
+						<img src="images/wRook.png" class="hidden" alt="Captured Black Queen" />
 					</div>
 				</div>
-
-
 			</div>
+
+			<div class="row">
+				<div class="n1 emptybox">
+				</div>
+			</div>
+
+			<div class="row">
+				<audio src="music/dvorak.mp3">
+				</audio>
+			</div>
+
+			
+			</div>
+
 		</div>
+
     </body>
 </html>

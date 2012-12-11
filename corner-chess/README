@@ -19,3 +19,10 @@ Win by checkmating opponent.
 
 Will initially be created with JavaScript, jQuery, jQuery UI.  Human players/interface.
 
+Stages of development are:
+1. Setup basic board/pieces
+2. Work on piece attributes
+3. Determine legal maneuvers
+4. Setup capturing/scoring
+5. Setup end game conditions
+
